@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(board, moves) {
+        //인형뽑기 게임의 알고리즘을 만들어보자
+        //인형을 뽑아서 바구니에 넣어주는 식으로
+        //인형이 없는 곳에서 크레인을 작동시키면 아무일도 없다
+        //바구니에 같은 모양의 인형 두 개가 바구니에 연속해서 쌓이면 터뜨려지면서 바구니에서 사라진다
+        //크레인을 모두 작동시킨 뒤 터져서 사라진 인행의 개수를 리턴한다
+
+        //moves는 board의 n-1번째 요소를 뜻한다
+        //moves의 번호에 맞는 배열을 pop시키고
+        //pop된 숫자를 새로운 배열(바구니)에 넣어준다
+        //크레인 작동이 끝난 뒤 바구니 배열을 살펴봤을때
+        //나란히 2개이상의 같은 수가 존재하면 모두 사라진다
+
+        // 1. stack에 크레인으로 뽑은 인형을 넣어주는 part
+        let stack = [];
+        for (let n = 0; n < moves.length; n++) {
+          let target = a[b[n] - 1];
+          if (target[target.length - 1] !== 0) stack.push(target.pop());
+          else target.pop();
+        }
+
+        // 2. stack에 들어간 인형을 판단하는 part
+        let count = 0;
+        for (let i = 0; i < stack.length; i++) {
+          if (stack[i] === stack[i + 1]) count++;
+          else if (stack[i] !== stack[i + 1] && stack[i - 1] === stack[i])
+            count++;
+        }
+        return count;
+      }
+
+      let a = [
+        [0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 3],
+        [0, 2, 5, 0, 1],
+        [4, 2, 4, 4, 2],
+        [3, 5, 1, 3, 1],
+      ];
+
+      let b = [1, 5, 3, 5, 1, 2, 1, 4];
+      console.log(solution(a, b));
+    </script>
+  </body>
+</html>
